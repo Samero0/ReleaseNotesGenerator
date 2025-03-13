@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import { styled } from 'styled-components'
 import Button from "./components/Button.tsx"
+import Input from "./components/Input.tsx"
 
 const Display = styled.div`
   display: flex;
@@ -21,6 +22,7 @@ createRoot(document.getElementById('root')!).render(
     <Display>
       <div>hola mundo</div>
       <Button onClick={() => console.log('hola')} text='hola'></Button>
+      <Input id='example_1' placeholder='Escribe aqui...'/>
     </Display>
   </StrictMode>
 )
