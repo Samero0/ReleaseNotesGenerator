@@ -10,8 +10,8 @@ const StyledTextBox = styled.textarea`
     padding: 10px 20px;
     background-color: #566573;
     color: black;
-    width: 300px;
-    height: 100px;
+    width: 700px;
+    height: 250px;
 
     &::placeholder{
         color: white;

@@ -7,7 +7,13 @@ export const useHandlerState = () =>{
     
     const handleChange = (e : ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value)
-    }
+    };
 
     return {value, handleChange}
-}
+};
+
+export const codeGenerator = (date: string, version: string, content: string) => {
+    return () => {
+        return `[{"version":"${version}","date":"${date}","content":"${content}"}]`;
+    };
+};

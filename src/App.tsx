@@ -5,6 +5,7 @@ import Input from "./components/Input.tsx"
 import Label from "./components/Label.tsx"
 import TextBox from "./components/Textbox.tsx"
 import { useHandlerState } from "./hooks/codeGenerator.ts"
+import { codeGenerator } from './hooks/codeGenerator.ts'
 
 const Display = styled.div`
   display: flex;
@@ -27,9 +28,16 @@ const Element = styled.div`
 
 export const App = () => {
 
+    //handlers for the inputs
     const { value: inputDate, handleChange: handleChangeDate } = useHandlerState();
     const { value: inputVersion, handleChange: handleChangeVersion } = useHandlerState();
     const { value: inputContent, handleChange: handleChangeContent } = useHandlerState();
+
+    //code generator function
+    const generateCode = (inputDate: string, inputVersion: string, inputContent: string) => {
+        const code = codeGenerator(inputDate, inputVersion, inputContent)()
+        console.log(code);
+    }
 
     return (
         <Display>
@@ -71,7 +79,7 @@ export const App = () => {
                 />
                 <Button
                     id='button_generate'
-                    onClick={() => console.log('hola')}
+                    onClick={() => generateCode(inputDate, inputVersion, inputContent)}
                     text='Generate'
                 />
             </Element>
