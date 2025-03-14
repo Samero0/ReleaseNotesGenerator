@@ -7,13 +7,13 @@ interface InputProps{
 
 const StyledInput = styled.input`
     padding: 10px 20px;
-    background-color: grey;
-    color: black;
+    background-color: #566573;
+    color: white;
     border: none;
 
     &::placeholder{
         opacity:1;
-        color: black;
+        color: white;
     }
 `;
 

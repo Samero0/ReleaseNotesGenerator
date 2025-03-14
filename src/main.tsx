@@ -11,21 +11,40 @@ import TextBox from "./components/Textbox.tsx"
 const Display = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  justify-self: center;
-  width: 100%;
-  height: 100%;
-  border: 1px solid red;
+  width: fit-content;
+  height: fit-content;
+  border: 1px solid grey;
+  border-radius: 25px;
+`;
+
+const Element = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding: 1em;
+  gap: 1em;
+  align-items: center;
 `;
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Display>
-      <Button onClick={() => console.log('hola')} text='hola'></Button>
-      <Input id ='example_1' placeholder='Escribe aqui...'/>
-      <Label id ='example_1' text='hola'></Label>
-      <TextBox id='example_2' placeholder='Escribe aqui...' value='hola'/>
+      <Element>
+        <Input id ='input_date' placeholder='Escribe aqui...'/>        
+        <Label id ='label_date' text='Date'></Label>
+      </Element>
+      <Element>
+        <Input id ='input_version' placeholder='Escribe aqui...'/>        
+        <Label id ='label_version' text='Version'></Label>
+      </Element>
+      <Element>
+        <Input id ='input_content' placeholder='Escribe aqui...'/>        
+        <Label id ='label_content' text='Content'></Label>
+      </Element>
+      <Element>
+        <TextBox id='textBox_code' placeholder='Code will generate here'/>
+        <Button id='button_generate' onClick={() => console.log('hola')} text='Generate'></Button>
+      </Element>
     </Display>
   </StrictMode>
 )

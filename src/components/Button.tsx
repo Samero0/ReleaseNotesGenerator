@@ -1,21 +1,24 @@
 import { styled } from 'styled-components'
 
 interface ButtonProps{
+    id : string;
     text : string;
     onClick : () => void;
 }
 
 const StyledButton = styled.button`
     padding: 10px 20px;
-    background-color: blue;
-    color: white;
-    border: none;
+    background-color: #aeb6bf;
+    color: black;
+    font-weight:bold;
+    border: 1px solid black;
+    border-radius: 10px;
     cursor: pointer;
 `;
 
-const Button : React.FC<ButtonProps> = ({text, onClick}) => {
+const Button : React.FC<ButtonProps> = ({id, text, onClick}) => {
     return (
-        <StyledButton onClick={onClick}>{text}</StyledButton>
+        <StyledButton id={id} onClick={onClick}>{text}</StyledButton>
     );
 };
 
