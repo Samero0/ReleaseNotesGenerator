@@ -12,8 +12,9 @@ const Display = styled.div`
   justify-content: center;
   width: fit-content;
   height: fit-content;
-  border: 1px solid grey;
+  border: 2px solid grey;
   border-radius: 25px;
+  box-shadow: lightgray 5px 5px;
 `;
 
 const Element = styled.div`
@@ -34,7 +35,7 @@ export const App = () => {
         <Display>
             <Element>
                 <Input
-                    id='input_date' placeholder='Escribe aqui...'
+                    id='input_date' placeholder='DD/MM/YYYY'
                     value={inputDate}
                     onChange={handleChangeDate}
                 />
@@ -45,7 +46,7 @@ export const App = () => {
             </Element>
             <Element>
                 <Input id='input_version'
-                    placeholder='Escribe aqui...'
+                    placeholder='0.0.0'
                     value={inputVersion}
                     onChange={handleChangeVersion}
                 />
@@ -56,7 +57,7 @@ export const App = () => {
             </Element>
             <Element>
                 <Input id='input_content'
-                    placeholder='Escribe aqui...'
+                    placeholder='<Html></Html>'
                     value={inputContent}
                     onChange={handleChangeContent}
                 />
