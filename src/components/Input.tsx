@@ -2,7 +2,9 @@ import { styled } from 'styled-components'
 
 interface InputProps{
     id : string
+    value? : string
     placeholder? : string
+    onChange? : (e : React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const StyledInput = styled.input`
@@ -17,9 +19,9 @@ const StyledInput = styled.input`
     }
 `;
 
-const Input : React.FC<InputProps> = ({id, placeholder}) => {
+const Input : React.FC<InputProps> = ({id, placeholder, value, onChange}) => {
     return (
-        <StyledInput id={id} placeholder={placeholder}></StyledInput>
+        <StyledInput id={id} placeholder={placeholder} value={value} onChange={onChange}></StyledInput>
     );
 };
 
