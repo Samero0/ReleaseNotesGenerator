@@ -5,7 +5,7 @@ export const useHandlerState = () =>{
     
     const [value, setInputValue] = useState<string>('')
     
-    const handleChange = (e : ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e : ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setInputValue(e.target.value)
     };
 

@@ -8,13 +8,18 @@ interface TextBoxProps{
 
 const StyledTextBox = styled.textarea`
     padding: 10px 20px;
-    background-color: #566573;
+    background-color: #707b7c;
     color: black;
     width: 700px;
     height: 250px;
-
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 11px;
+    border: 1px white solid;
+    border-radius: 10px;
+    box-shadow: 1px 1px lightgrey; 
     &::placeholder{
         color: white;
+        font-family: 'Courier New', Courier, monospace;
     }
 `;
 

@@ -7,6 +7,7 @@ interface ButtonProps{
 }
 
 const StyledButton = styled.button`
+    width: 300px;
     padding: 10px 20px;
     background-color: #aeb6bf;
     color: black;
