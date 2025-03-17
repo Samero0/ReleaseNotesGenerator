@@ -104,7 +104,7 @@ export const App = () => {
                     <Label id="label_date" text="Date:" />
                     <CustomDatePicker
                         value={startDate} 
-                        onChange={setStartDate}  
+                        onChange={setStartDate} 
                     />
                 </FormInputElement>
 
