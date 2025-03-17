@@ -16,8 +16,8 @@ const Display = styled.div`
   height: fit-content;
   border: 2px solid grey;
   border-radius: 25px;
-  box-shadow: lightgray 5px 5px;
-  padding: 1em;
+  box-shadow: #6E6E6E 5px 5px;
+  padding: 10px;
 `;
 
 const FormInputElement = styled.div`

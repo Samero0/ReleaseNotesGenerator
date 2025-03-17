@@ -9,7 +9,7 @@ interface ButtonProps{
 const StyledButton = styled.button`
     width: 300px;
     padding: 10px 20px;
-    background-color: #aeb6bf;
+    background-color: #3D74B4;
     color: black;
     font-weight:bold;
     border: 1px solid black;
@@ -17,7 +17,7 @@ const StyledButton = styled.button`
     cursor: pointer;
 
     &:hover{
-        background-color: #98a0a8;
+        background-color: #336195;
         box-shadow: black 0 0 4px;
     }
 `;

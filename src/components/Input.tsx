@@ -10,11 +10,11 @@ interface InputProps{
 const StyledInput = styled.input`
     padding: 10px 20px;
     color: black;
-    border: 1px darkslategray solid;
+    border: 1px #6E6E6E solid;
     border-radius: 10px;
     &::placeholder{
         opacity:1;
-        color: grey;
+        color: #6E6E6E;
     }
 `;
 
