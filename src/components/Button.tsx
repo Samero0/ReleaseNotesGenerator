@@ -11,7 +11,6 @@ const StyledButton = styled.button`
     padding: 10px 20px;
     background-color: #3D74B4;
     color: black;
-    font-weight:bold;
     border: 1px solid black;
     border-radius: 10px;
     cursor: pointer;

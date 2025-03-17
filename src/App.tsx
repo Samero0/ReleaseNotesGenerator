@@ -6,7 +6,7 @@ import { validateVersion } from './validators/validateVersion.ts';
 import { formatDate } from './validators/formatDate.ts';
 import beautify from 'js-beautify';
 import CustomDatePicker from './components/DatePicker.tsx';
-import HtmlEditor from './components/HtmlEditor.tsx'; // Import the HTML editor
+import HtmlEditor from './components/HtmlEditor.tsx'; 
 import Button from './components/Button.tsx';
 import Input from './components/Input.tsx';
 import Label from './components/Label.tsx';

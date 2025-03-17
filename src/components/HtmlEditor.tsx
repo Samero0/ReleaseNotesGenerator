@@ -16,11 +16,11 @@ const HtmlEditor: React.FC<HtmlEditorProps> = ({ value, onChange }) => {
       width="700px"
       extensions={[
         html(),
-        EditorState.tabSize.of(2), // Establece el tamaño de tabulación en 2 espacios
+        EditorState.tabSize.of(2), 
       ]}
       onChange={onChange}
-      theme="light"
-      basicSetup={true} // Usa la configuración básica
+      theme="none"
+      basicSetup={true} 
     />
   );
 };
