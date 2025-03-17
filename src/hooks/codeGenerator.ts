@@ -14,6 +14,13 @@ export const useHandlerState = () =>{
 
 export const codeGenerator = (date: string, version: string, content: string) => {
     return () => {
-        return `[{"version":"${version}","date":"${date}","content":"${content}"}]`;
+        //delete the literals "\t,\s,\n" , "\t\t..." , " \t "
+        const noLiterals = content.replace(/(\\[tsn]){2,}|\\[tsn](?=\S)|\\[tsn]|\\ /g, '');
+        //delete unnecesary spaces, tabs and enters
+        const noSpaces = noLiterals.replace(/\s{2,}|\\[tsn] /g, ' ')
+        //delete unnecesary backslashes
+        const clearContent = noSpaces.replace(/\\/g, '');
+
+        return `[{"version":"${version}", "date":"${date}", "content":"${clearContent}"}]`;
     };
 };
