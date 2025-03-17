@@ -1,13 +1,14 @@
 import { styled } from 'styled-components';
+import { useHandlerState } from './hooks/codeGenerator.ts';
+import { codeGenerator } from './hooks/codeGenerator.ts';
+import { useState } from 'react';
 import Button from './components/Button.tsx';
 import Input from './components/Input.tsx';
 import Label from './components/Label.tsx';
 import TextBox from './components/Textbox.tsx';
-import { useHandlerState } from './hooks/codeGenerator.ts';
-import { codeGenerator } from './hooks/codeGenerator.ts';
-import { useState } from 'react';
 
 const Display = styled.div`
+  font-family: Arial, Helvetica, sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -80,17 +81,7 @@ export const App = () => {
         <Display>
             <FormDisplay>
 
-                <FormInputElement>
-                    <Label id="label_date" text="Date:" />
-                    <Input
-                        id="input_date"
-                        placeholder="DD/MM/YYYY"
-                        value={inputDate}
-                        onChange={handleChangeDate} 
-                    />
-                </FormInputElement>
-
-                <FormInputElement>
+            <FormInputElement>
                     <Label id="label_version" text="Version:" />
                     <Input
                         id="input_version"
@@ -99,6 +90,16 @@ export const App = () => {
                         onChange={handleChangeVersion} 
                     />
 
+                </FormInputElement>
+                
+                <FormInputElement>
+                    <Label id="label_date" text="Date:" />
+                    <Input
+                        id="input_date"
+                        placeholder="DD/MM/YYYY"
+                        value={inputDate}
+                        onChange={handleChangeDate} 
+                    />
                 </FormInputElement>
 
                 <Label id="label_content" text="Content:" />
