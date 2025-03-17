@@ -2,6 +2,7 @@ import { styled } from 'styled-components';
 import { useHandlerState } from './hooks/codeGenerator.ts';
 import { codeGenerator } from './hooks/codeGenerator.ts';
 import { useState } from 'react';
+import { validateVersion } from './validators/validateVersion.ts';
 import Button from './components/Button.tsx';
 import Input from './components/Input.tsx';
 import Label from './components/Label.tsx';
@@ -71,6 +72,12 @@ export const App = () => {
 
     // code generator function
     const generateCode = (inputDate: string, inputVersion: string, inputContent: string) => {
+
+        if (!validateVersion(inputVersion)) {
+            alert('Invalid version format. Please use the format X.Y.Z or X.Y (e.g., 1.0.0)');
+            return;
+        }
+
         const code = codeGenerator(inputDate, inputVersion, inputContent)();
         setCodeValue(code);
     };
