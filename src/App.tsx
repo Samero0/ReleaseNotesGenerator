@@ -3,6 +3,7 @@ import { useHandlerState } from './hooks/codeGenerator.ts';
 import { codeGenerator } from './hooks/codeGenerator.ts';
 import { useState } from 'react';
 import { validateVersion } from './validators/validateVersion.ts';
+import { formatDate } from './validators/formatDate.ts';
 import CustomDatePicker from './components/DatePicker.tsx';
 import Button from './components/Button.tsx';
 import Input from './components/Input.tsx';
@@ -74,21 +75,15 @@ export const App = () => {
 
     // code generator function
     const generateCode = (startDate: Date | null, inputVersion: string, inputContent: string) => {
+        //version validator
         if (!validateVersion(inputVersion)) {
             alert('Invalid version format. Please use the format X.Y.Z or X.Y (e.g., 1.0.0)');
             return;
         }
 
-        // converts the date to "DD-MM-YYYY" format 
-        let dateString = '';
-        if (startDate) {
-            const day = String(startDate.getDate()).padStart(2, '0'); // ensure two digits
-            const month = String(startDate.getMonth() + 1).padStart(2, '0'); // ensure two digits
-            const year = startDate.getFullYear();
-            dateString = `${day}-${month}-${year}`;  //format as "DD-MM-YYYY"
-        }
+        const dateString = formatDate(startDate)
 
-        const code = codeGenerator(dateString, inputVersion, inputContent)();
+        const code = codeGenerator(dateString!, inputVersion, inputContent)();
         setCodeValue(code);
     };
     const [code, setCodeValue] = useState<string>('');
