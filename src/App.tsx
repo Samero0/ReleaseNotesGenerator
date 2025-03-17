@@ -3,6 +3,7 @@ import { useHandlerState } from './hooks/codeGenerator.ts';
 import { codeGenerator } from './hooks/codeGenerator.ts';
 import { useState } from 'react';
 import { validateVersion } from './validators/validateVersion.ts';
+import CustomDatePicker from './components/DatePicker.tsx';
 import Button from './components/Button.tsx';
 import Input from './components/Input.tsx';
 import Label from './components/Label.tsx';
@@ -65,20 +66,21 @@ const LargeTextArea = styled.textarea`
 
 export const App = () => {
 
+    const [startDate, setStartDate] = useState<Date | null>(new Date());
+
     // handlers for the inputs
-    const { value: inputDate, handleChange: handleChangeDate } = useHandlerState();
     const { value: inputVersion, handleChange: handleChangeVersion } = useHandlerState();
     const { value: inputContent, handleChange: handleChangeContent } = useHandlerState();
 
     // code generator function
-    const generateCode = (inputDate: string, inputVersion: string, inputContent: string) => {
-
+    const generateCode = (startDate: Date | null, inputVersion: string, inputContent: string) => {
         if (!validateVersion(inputVersion)) {
             alert('Invalid version format. Please use the format X.Y.Z or X.Y (e.g., 1.0.0)');
             return;
         }
 
-        const code = codeGenerator(inputDate, inputVersion, inputContent)();
+        const dateString = startDate!.toISOString().split('T')[0];  // format "DD/MM/YYYY"
+        const code = codeGenerator(dateString, inputVersion, inputContent)();
         setCodeValue(code);
     };
 
@@ -88,7 +90,7 @@ export const App = () => {
         <Display>
             <FormDisplay>
 
-            <FormInputElement>
+                <FormInputElement>
                     <Label id="label_version" text="Version:" />
                     <Input
                         id="input_version"
@@ -96,16 +98,13 @@ export const App = () => {
                         value={inputVersion}
                         onChange={handleChangeVersion} 
                     />
-
                 </FormInputElement>
                 
                 <FormInputElement>
                     <Label id="label_date" text="Date:" />
-                    <Input
-                        id="input_date"
-                        placeholder="DD/MM/YYYY"
-                        value={inputDate}
-                        onChange={handleChangeDate} 
+                    <CustomDatePicker
+                        value={startDate} 
+                        onChange={setStartDate}  
                     />
                 </FormInputElement>
 
@@ -122,7 +121,7 @@ export const App = () => {
             <FormResult>
                 <Button
                     id="button_generate"
-                    onClick={() => generateCode(inputDate, inputVersion, inputContent)}
+                    onClick={() => generateCode(startDate, inputVersion, inputContent)}  
                     text="Generate"
                 />
                 <TextBox id="textBox_code" placeholder="Code will generate here" value={code} />
