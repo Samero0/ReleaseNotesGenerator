@@ -9,7 +9,11 @@ export const useHandlerState = () =>{
         setInputValue(e.target.value)
     };
 
-    return {value, handleChange}
+    const setValue = (newValue: string) => {
+        setInputValue(newValue);
+    };
+
+    return {value, handleChange, setValue}
 };
 
 export const codeGenerator = (date: string, version: string, content: string) => {

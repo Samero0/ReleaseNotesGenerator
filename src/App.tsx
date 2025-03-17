@@ -4,12 +4,15 @@ import { codeGenerator } from './hooks/codeGenerator.ts';
 import { useState } from 'react';
 import { validateVersion } from './validators/validateVersion.ts';
 import { formatDate } from './validators/formatDate.ts';
+import beautify from 'js-beautify';
 import CustomDatePicker from './components/DatePicker.tsx';
+import HtmlEditor from './components/HtmlEditor.tsx'; // Import the HTML editor
 import Button from './components/Button.tsx';
 import Input from './components/Input.tsx';
 import Label from './components/Label.tsx';
 import TextBox from './components/Textbox.tsx';
 
+// General styles for the application
 const Display = styled.div`
   font-family: Arial, Helvetica, sans-serif;
   display: flex;
@@ -19,7 +22,7 @@ const Display = styled.div`
   height: fit-content;
   border: 2px solid grey;
   border-radius: 25px;
-  box-shadow: #6E6E6E 5px 5px;
+  box-shadow: #6E6E6E 3px 3px;
   padding: 10px;
 `;
 
@@ -47,88 +50,76 @@ const FormResult = styled.div`
   gap: 1em;
 `;
 
-const LargeTextArea = styled.textarea`
-    width: 700px;
-    height: 270px;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 11px;
-    border: 1px black solid;
-    border-radius: 10px;
-    box-shadow: 1px 1px;
-    padding: 10px 20px;
-    color: black;
-    border: 1px darkslategray solid;
-    border-radius: 10px;
-    &::placeholder{
-        opacity:1;
-        color: grey;
-    }
-`;
+//auto-format HTML with js-beautify
+const formatHtml = (html: string) => {
+  return beautify.html(html, { indent_size: 2, wrap_attributes: "auto" });
+};
 
 export const App = () => {
+  const [startDate, setStartDate] = useState<Date | null>(new Date());
 
-    const [startDate, setStartDate] = useState<Date | null>(new Date());
+  // input handlers
+  const { value: inputVersion, handleChange: handleChangeVersion } = useHandlerState();
+  const { value: inputContent, setValue: setInputContent } = useHandlerState();
 
-    // handlers for the inputs
-    const { value: inputVersion, handleChange: handleChangeVersion } = useHandlerState();
-    const { value: inputContent, handleChange: handleChangeContent } = useHandlerState();
+  // handler for the editor content 
+  const handleEditorChange = (newValue: string) => {
+    const formattedValue = formatHtml(newValue); // Format the HTML content
+    setInputContent(formattedValue); // Update the value with the formatted content
+  };
 
-    // code generator function
-    const generateCode = (startDate: Date | null, inputVersion: string, inputContent: string) => {
-        //version validator
-        if (!validateVersion(inputVersion)) {
-            alert('Invalid version format. Please use the format X.Y.Z or X.Y (e.g., 1.0.0)');
-            return;
-        }
+  // Code generation function
+  const generateCode = (startDate: Date | null, inputVersion: string, inputContent: string) => {
+    // Version validation
+    if (!validateVersion(inputVersion)) {
+      alert('Invalid version format. Please use the format X.Y.Z or X.Y (e.g., 1.0.0)');
+      return;
+    }
 
-        const dateString = formatDate(startDate)
+    const dateString = formatDate(startDate); // format the date
+    const code = codeGenerator(dateString!, inputVersion, inputContent)(); // Generate the code
+    setCodeValue(code); // update the state with the generated code
+  };
 
-        const code = codeGenerator(dateString!, inputVersion, inputContent)();
-        setCodeValue(code);
-    };
-    const [code, setCodeValue] = useState<string>('');
+  const [code, setCodeValue] = useState<string>(''); //state to store the generated code
 
-    return (
-        <Display>
-            <FormDisplay>
+  return (
+    <Display>
+      <FormDisplay>
+        <FormInputElement>
+          <Label id="label_version" text="Version:" />
+          <Input
+            id="input_version"
+            placeholder="0.0.0"
+            value={inputVersion}
+            onChange={handleChangeVersion} 
+          />
+        </FormInputElement>
 
-                <FormInputElement>
-                    <Label id="label_version" text="Version:" />
-                    <Input
-                        id="input_version"
-                        placeholder="0.0.0"
-                        value={inputVersion}
-                        onChange={handleChangeVersion} 
-                    />
-                </FormInputElement>
-                
-                <FormInputElement>
-                    <Label id="label_date" text="Date:" />
-                    <CustomDatePicker
-                        value={startDate} 
-                        onChange={setStartDate} 
-                    />
-                </FormInputElement>
+        <FormInputElement>
+          <Label id="label_date" text="Date:" />
+          <CustomDatePicker
+            value={startDate} 
+            onChange={setStartDate} 
+          />
+        </FormInputElement>
 
-                <Label id="label_content" text="Content:" />
-                <LargeTextArea
-                    id="input_content"
-                    placeholder="<Html></Html>"
-                    value={inputContent}
-                    onChange={handleChangeContent} 
-                />
+        {/* HTML content editor */}
+        <Label id="label_content" text="Content:" />
+        <HtmlEditor
+          value={inputContent}
+          onChange={handleEditorChange} //pass the handler with formatting
+        />
+      </FormDisplay>
 
-            </FormDisplay>
-
-            <FormResult>
-                <Button
-                    id="button_generate"
-                    onClick={() => generateCode(startDate, inputVersion, inputContent)}  
-                    text="Generate"
-                />
-                <TextBox id="textBox_code" placeholder="Code will generate here" value={code} />
-            </FormResult>
-
-        </Display>
-    );
+      <FormResult>
+        <Button
+          id="button_generate"
+          onClick={() => generateCode(startDate, inputVersion, inputContent)}  
+          text="Generate"
+        />
+        <TextBox id="textBox_code" placeholder="Code will generate here" value={code} />
+      </FormResult>
+    </Display>
+  );
 };
