@@ -79,11 +79,18 @@ export const App = () => {
             return;
         }
 
-        const dateString = startDate!.toISOString().split('T')[0];  // format "DD/MM/YYYY"
+        // converts the date to "DD-MM-YYYY" format 
+        let dateString = '';
+        if (startDate) {
+            const day = String(startDate.getDate()).padStart(2, '0'); // ensure two digits
+            const month = String(startDate.getMonth() + 1).padStart(2, '0'); // ensure two digits
+            const year = startDate.getFullYear();
+            dateString = `${day}-${month}-${year}`;  //format as "DD-MM-YYYY"
+        }
+
         const code = codeGenerator(dateString, inputVersion, inputContent)();
         setCodeValue(code);
     };
-
     const [code, setCodeValue] = useState<string>('');
 
     return (

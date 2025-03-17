@@ -44,7 +44,7 @@ const CustomDatePicker: React.FC<DatePickerProps> = ({ value, onChange}) => {
         selected={value}
         onChange={onChange}
         showIcon
-        dateFormat="yyyy-MM-dd"
+        dateFormat="dd-MM-yyyy"
       />
     </DatePickerContainer>
   );
