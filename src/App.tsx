@@ -13,9 +13,23 @@ import Button from './components/Button.tsx';
 import Input from './components/Input.tsx';
 import Label from './components/Label.tsx';
 import TextBox from './components/Textbox.tsx';
+import LivePreview from './components/LivePreview.tsx';
 
 // General styles for the application
 const Display = styled.div`
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: fit-content;
+  height: fit-content;
+  border: 2px solid red;
+  border-radius: 25px;
+  box-shadow: #6E6E6E 3px 3px;
+`;
+
+// General styles for the application
+const FormDisplay = styled.div`
   font-family: Arial, Helvetica, sans-serif;
   display: flex;
   flex-direction: column;
@@ -26,21 +40,23 @@ const Display = styled.div`
   border-radius: 25px;
   box-shadow: #6E6E6E 3px 3px;
   padding: 10px;
+  gap:10px;
+  margin: 8px;
 `;
 
 const FormInputElement = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 1em;
+  padding: 10px;
   gap: 1em;
   align-items: center;
   justify-content: center;
 `;
 
-const FormDisplay = styled.div`
+const FormContent = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 1em;
+  padding: 10px;
   gap: 1em;
   justify-content: center;
   align-items: center;
@@ -50,7 +66,7 @@ const FormResult = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1em;
+  padding: 10px;
 `;
 
 export const App = () => {
@@ -101,48 +117,54 @@ export const App = () => {
   return (
     <Display>
       <FormDisplay>
+        <FormContent>
+          <FormInputElement>
+            <Label id="label_version" text="Version:" />
+            <Input
+              id="input_version"
+              placeholder="X.Y.Z"
+              value={inputVersion}
+              onChange={handleChangeVersion} 
+            />
+          </FormInputElement>
+
+          <FormInputElement>
+            <Label id="label_date" text="Date:" />
+            <CustomDatePicker
+              value={startDate} 
+              onChange={setStartDate} 
+            />
+          </FormInputElement>
+
+          {/* HTML content editor */}
+          <Label id="label_content" text="Content:" />
+          <HtmlEditor
+            value={inputContent}
+            onChange={handleEditorChange} //pass the handler with formatting
+          />
+        </FormContent>
+
         <FormInputElement>
-          <Label id="label_version" text="Version:" />
-          <Input
-            id="input_version"
-            placeholder="0.0.0"
-            value={inputVersion}
-            onChange={handleChangeVersion} 
+        <Button
+            id="button_indent"
+            onClick={handleIndentContent}  
+            text="Indent Content"
+          />
+          <Button
+            id="button_generate"
+            onClick={() => generateCode(startDate, inputVersion, inputContent)}  
+            text="Generate"
           />
         </FormInputElement>
 
-        <FormInputElement>
-          <Label id="label_date" text="Date:" />
-          <CustomDatePicker
-            value={startDate} 
-            onChange={setStartDate} 
-          />
-        </FormInputElement>
-
-        {/* HTML content editor */}
-        <Label id="label_content" text="Content:" />
-        <HtmlEditor
-          value={inputContent}
-          onChange={handleEditorChange} //pass the handler with formatting
-        />
+        <FormResult>
+          <TextBox id="textBox_code" placeholder="Code will generate here" value={code} />
+        </FormResult>
       </FormDisplay>
 
-      <FormInputElement>
-      <Button
-          id="button_indent"
-          onClick={handleIndentContent}  
-          text="Indent Content"
-        />
-        <Button
-          id="button_generate"
-          onClick={() => generateCode(startDate, inputVersion, inputContent)}  
-          text="Generate"
-        />
-      </FormInputElement>
-
-      <FormResult>
-        <TextBox id="textBox_code" placeholder="Code will generate here" value={code} />
-      </FormResult>
+      <FormDisplay>
+        <LivePreview htmlContent={inputContent}></LivePreview>
+      </FormDisplay>
 
     </Display>
   );
