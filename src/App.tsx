@@ -95,8 +95,9 @@ export const App = () => {
       return;
     }
 
-    if (!validateHtml(inputContentCleaned)){
-      alert('Invalid content format. Please check the Html parsing')
+    const { isValid, errorMessage } = validateHtml(inputContentCleaned);
+    if (!isValid) {
+      alert(errorMessage);  //display the error message in an alert
       return;
     }
 

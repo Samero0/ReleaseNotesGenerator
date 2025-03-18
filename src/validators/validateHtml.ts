@@ -1,36 +1,31 @@
-export const validateHtml = (html: string): boolean => {
-    // content is not empty
-    if (!html.trim()) {
-      console.error("HTML is empty.");
-      return false;
-    }
-  
-    try {
+// validateHtml.ts
+export const validateHtml = (html: string): { isValid: boolean, errorMessage: string | null } => {
+  // content is not empty
+  if (!html.trim()) {
+    return { isValid: false, errorMessage: "HTML is empty." };
+  }
 
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, "text/html");
-  
-      // simple html validation
-      const errorNode = doc.querySelector("parsererror");
-      if (errorNode) {
-        console.error("HTML Parsing Error:", errorNode.textContent);
-        return false; 
-      }
-  
-      // gather all the open an closed tags
-      const openTags = html.match(/<([a-z]+)(?:\s[^>]*?)?>/gi); 
-      const closeTags = html.match(/<\/([a-z]+)>/gi); 
-  
-      // if there are unclosed tags catches the error:
-      if (openTags!.length !== closeTags!.length) {
-        console.error("There are unclosed tags.");
-        return false;
-      }
-  
-      return true;
-    } catch (error) {
-      console.error("Error validating HTML:", error);
-      return false;
+  try {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+
+    // simple html validation
+    const errorNode = doc.querySelector("parsererror");
+    if (errorNode) {
+      return { isValid: false, errorMessage: "HTML Parsing Error: " + errorNode.textContent };
     }
-  };
-  
+
+    // gather all the open and closed tags
+    const openTags = html.match(/<([a-z]+)(?:\s[^>]*?)?>/gi);
+    const closeTags = html.match(/<\/([a-z]+)>/gi);
+
+    // if there are unclosed tags, catch the error
+    if (openTags!.length !== closeTags!.length) {
+      return { isValid: false, errorMessage: "Html error: There are unclosed tags." };
+    }
+
+    return { isValid: true, errorMessage: null };
+  } catch (error) {
+    return { isValid: false, errorMessage: "Error validating HTML: " + error };
+  }
+};
