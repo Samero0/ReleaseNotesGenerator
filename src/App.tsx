@@ -34,6 +34,7 @@ const FormInputElement = styled.div`
   padding: 1em;
   gap: 1em;
   align-items: center;
+  justify-content: center;
 `;
 
 const FormDisplay = styled.div`
@@ -61,8 +62,7 @@ export const App = () => {
 
   // handler for the editor content 
   const handleEditorChange = (newValue: string) => {
-    const formattedValue = formatHtml(newValue); 
-    setInputContent(formattedValue); 
+    setInputContent(newValue); 
   };
 
   // Code generation function
@@ -90,6 +90,13 @@ export const App = () => {
   };
 
   const [code, setCodeValue] = useState<string>(''); //state to store the generated code
+
+  // Function to handle indenting the content
+  const handleIndentContent = () => {
+    const cleanedContent = cleanContent(inputContent)
+    const indentedContent = formatHtml(cleanedContent); 
+    setInputContent(indentedContent); 
+  };
 
   return (
     <Display>
@@ -120,14 +127,23 @@ export const App = () => {
         />
       </FormDisplay>
 
-      <FormResult>
+      <FormInputElement>
+      <Button
+          id="button_indent"
+          onClick={handleIndentContent}  
+          text="Indent Content"
+        />
         <Button
           id="button_generate"
           onClick={() => generateCode(startDate, inputVersion, inputContent)}  
           text="Generate"
         />
+      </FormInputElement>
+
+      <FormResult>
         <TextBox id="textBox_code" placeholder="Code will generate here" value={code} />
       </FormResult>
+
     </Display>
   );
 };
