@@ -3,8 +3,10 @@ import { useHandlerState } from './hooks/codeGenerator.ts';
 import { codeGenerator } from './hooks/codeGenerator.ts';
 import { useState } from 'react';
 import { validateVersion } from './validators/validateVersion.ts';
-import { formatDate } from './validators/formatDate.ts';
-import beautify from 'js-beautify';
+import { formatDate } from './hooks/formatDate.ts';
+import { validateHtml } from './validators/validateHtml.ts';
+import { cleanContent } from './hooks/contentCleaner.ts';
+import { formatHtml } from './hooks/autoFormatHtml.ts';
 import CustomDatePicker from './components/DatePicker.tsx';
 import HtmlEditor from './components/HtmlEditor.tsx'; 
 import Button from './components/Button.tsx';
@@ -50,11 +52,6 @@ const FormResult = styled.div`
   gap: 1em;
 `;
 
-//auto-format HTML with js-beautify
-const formatHtml = (html: string) => {
-  return beautify.html(html, { indent_size: 2, wrap_attributes: "auto" });
-};
-
 export const App = () => {
   const [startDate, setStartDate] = useState<Date | null>(new Date());
 
@@ -64,20 +61,31 @@ export const App = () => {
 
   // handler for the editor content 
   const handleEditorChange = (newValue: string) => {
-    const formattedValue = formatHtml(newValue); // Format the HTML content
-    setInputContent(formattedValue); // Update the value with the formatted content
+    const formattedValue = formatHtml(newValue); 
+    setInputContent(formattedValue); 
   };
 
   // Code generation function
   const generateCode = (startDate: Date | null, inputVersion: string, inputContent: string) => {
-    // Version validation
+
+    //tries to clean the content before the validations
+    const inputContentCleaned = cleanContent(inputContent);
+    const formattedContent = formatHtml(inputContentCleaned);
+    setInputContent(formattedContent);
+
+    //version validation
     if (!validateVersion(inputVersion)) {
       alert('Invalid version format. Please use the format X.Y.Z or X.Y (e.g., 1.0.0)');
       return;
     }
 
+    if (!validateHtml(inputContentCleaned)){
+      alert('Invalid content format. Please check the Html parsing')
+      return;
+    }
+
     const dateString = formatDate(startDate); // format the date
-    const code = codeGenerator(dateString!, inputVersion, inputContent)(); // Generate the code
+    const code = codeGenerator(dateString!, inputVersion, inputContentCleaned)(); // Generate the code
     setCodeValue(code); // update the state with the generated code
   };
 
