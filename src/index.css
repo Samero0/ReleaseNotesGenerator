@@ -5,4 +5,5 @@ html, body, #root {
     display: flex;
     justify-content: start;
     align-items: center;
+    font-family: var(--font-product-font-family, "Noto Sans Display");  
 }

@@ -3,18 +3,16 @@ import styled from 'styled-components';
 
 // Estilo para la vista previa
 const PreviewContainer = styled.div`
-  margin-top: 20px;
-  padding: 15px;
+  margin-top: 10px;
   border: 2px solid #ddd;
   border-radius: 10px;
   background-color: #f9f9f9;
   overflow-y: auto;
-  width: 95%;
-  height: 100%;
+  padding: 1em;
 `;
 
 const PreviewHeader = styled.h3`
-  margin-bottom: 10px;
+  margin-bottom: 10px;    
   font-size: 1.5rem;
   color: #333;
 `;

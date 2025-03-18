@@ -14,16 +14,19 @@ const StyledButton = styled.button`
     border: 1px solid black;
     border-radius: 10px;
     cursor: pointer;
-
+    font-family: var(--font-product-font-family, "Noto Sans Display");
     &:hover{
         background-color: #336195;
         box-shadow: black 0 0 4px;
     }
 `;
 
+
 const Button : React.FC<ButtonProps> = ({id, text, onClick}) => {
     return (
+
         <StyledButton id={id} onClick={onClick}>{text}</StyledButton>
+
     );
 };
 

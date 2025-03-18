@@ -8,38 +8,45 @@ import { validateHtml } from './validators/validateHtml.ts';
 import { cleanContent } from './hooks/contentCleaner.ts';
 import { formatHtml } from './hooks/autoFormatHtml.ts';
 import CustomDatePicker from './components/DatePicker.tsx';
-import HtmlEditor from './components/HtmlEditor.tsx'; 
+import HtmlEditor from './components/HtmlEditor.tsx';
 import Button from './components/Button.tsx';
 import Input from './components/Input.tsx';
 import Label from './components/Label.tsx';
 import TextBox from './components/Textbox.tsx';
 import LivePreview from './components/LivePreview.tsx';
+import Clickableimg from './components/ClickableImg.tsx';
+import clipBoardIcon from './assets/clipBoard.svg'
 
-// General styles for the application
 const Display = styled.div`
-  font-family: Arial, Helvetica, sans-serif;
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  width: fit-content;
-  height: fit-content;
-  border: 2px solid red;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100%;
   border-radius: 25px;
-  box-shadow: #6E6E6E 3px 3px;
 `;
 
-// General styles for the application
 const FormDisplay = styled.div`
-  font-family: Arial, Helvetica, sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: fit-content;
-  height: fit-content;
+  width: 40%;
+  height: 90%;
   border: 2px solid grey;
   border-radius: 25px;
-  box-shadow: #6E6E6E 3px 3px;
   padding: 10px;
+  gap:10px;
+  margin: 8px;
+`;
+
+const PreviewDisplay = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  height: 90%;
+  border: 2px solid grey;
+  border-radius: 25px;
+  padding: 20px;
   gap:10px;
   margin: 8px;
 `;
@@ -78,7 +85,7 @@ export const App = () => {
 
   // handler for the editor content 
   const handleEditorChange = (newValue: string) => {
-    setInputContent(newValue); 
+    setInputContent(newValue);
   };
 
   // Code generation function
@@ -111,29 +118,32 @@ export const App = () => {
   // Function to handle indenting the content
   const handleIndentContent = () => {
     const cleanedContent = cleanContent(inputContent)
-    const indentedContent = formatHtml(cleanedContent); 
-    setInputContent(indentedContent); 
+    const indentedContent = formatHtml(cleanedContent);
+    setInputContent(indentedContent);
   };
 
   return (
     <Display>
+
       <FormDisplay>
+
         <FormContent>
+
           <FormInputElement>
             <Label id="label_version" text="Version:" />
             <Input
               id="input_version"
               placeholder="X.Y.Z"
               value={inputVersion}
-              onChange={handleChangeVersion} 
+              onChange={handleChangeVersion}
             />
           </FormInputElement>
 
           <FormInputElement>
             <Label id="label_date" text="Date:" />
             <CustomDatePicker
-              value={startDate} 
-              onChange={setStartDate} 
+              value={startDate}
+              onChange={setStartDate}
             />
           </FormInputElement>
 
@@ -143,29 +153,32 @@ export const App = () => {
             value={inputContent}
             onChange={handleEditorChange} //pass the handler with formatting
           />
+
         </FormContent>
 
         <FormInputElement>
-        <Button
+          <Button
             id="button_indent"
-            onClick={handleIndentContent}  
+            onClick={handleIndentContent}
             text="Indent Content"
           />
           <Button
             id="button_generate"
-            onClick={() => generateCode(startDate, inputVersion, inputContent)}  
+            onClick={() => generateCode(startDate, inputVersion, inputContent)}
             text="Generate"
           />
         </FormInputElement>
 
         <FormResult>
+          <Clickableimg imageSrc={clipBoardIcon} alt='clipboard'/>
           <TextBox id="textBox_code" placeholder="Code will generate here" value={code} />
         </FormResult>
+
       </FormDisplay>
 
-      <FormDisplay>
+      <PreviewDisplay>
         <LivePreview htmlContent={inputContent}></LivePreview>
-      </FormDisplay>
+      </PreviewDisplay>
 
     </Display>
   );
