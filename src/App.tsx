@@ -7,6 +7,7 @@ import { formatDate } from './hooks/formatDate.ts';
 import { validateHtml } from './validators/validateHtml.ts';
 import { cleanContent } from './hooks/contentCleaner.ts';
 import { formatHtml } from './hooks/autoFormatHtml.ts';
+import { copyToClipboard } from './hooks/useClipboard.ts';
 import CustomDatePicker from './components/DatePicker.tsx';
 import HtmlEditor from './components/HtmlEditor.tsx';
 import Button from './components/Button.tsx';
@@ -20,7 +21,6 @@ import clipBoardIcon from './assets/clipBoard.svg'
 const Display = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
   width: 100%;
   height: 100%;
   border-radius: 25px;
@@ -31,8 +31,8 @@ const FormDisplay = styled.div`
   flex-direction: column;
   justify-content: center;
   width: 40%;
-  height: 90%;
-  border: 2px solid grey;
+  height: fit-content;
+  border: 2px solid #383838;
   border-radius: 25px;
   padding: 10px;
   gap:10px;
@@ -43,8 +43,8 @@ const PreviewDisplay = styled.div`
   display: flex;
   flex-direction: column;
   width: 60%;
-  height: 90%;
-  border: 2px solid grey;
+  height: 100%;
+  border: 2px solid #383838;
   border-radius: 25px;
   padding: 20px;
   gap:10px;
@@ -69,11 +69,15 @@ const FormContent = styled.div`
   align-items: center;
 `;
 
+const ImgDisplay = styled.div`
+  display: flex;
+  justify-content: end;
+`;
+
 const FormResult = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px;
 `;
 
 export const App = () => {
@@ -147,11 +151,13 @@ export const App = () => {
             />
           </FormInputElement>
 
-          {/* HTML content editor */}
-          <Label id="label_content" text="Content:" />
+          <Label 
+            id="label_content" 
+            text="Content:" 
+          />
           <HtmlEditor
             value={inputContent}
-            onChange={handleEditorChange} //pass the handler with formatting
+            onChange={handleEditorChange}
           />
 
         </FormContent>
@@ -169,15 +175,30 @@ export const App = () => {
           />
         </FormInputElement>
 
+        <ImgDisplay>
+          <Clickableimg 
+            imageSrc={clipBoardIcon} 
+            alt='clipboard' 
+            active={code.trim() !== ""} 
+            onClick={() => {copyToClipboard(code)}}
+            tooltip='Copy to clipboard'
+          />
+        </ImgDisplay>
+
         <FormResult>
-          <Clickableimg imageSrc={clipBoardIcon} alt='clipboard'/>
-          <TextBox id="textBox_code" placeholder="Code will generate here" value={code} />
+          <TextBox 
+            id="textBox_code" 
+            placeholder="Code will generate here" 
+            value={code} 
+          />
         </FormResult>
 
       </FormDisplay>
 
       <PreviewDisplay>
-        <LivePreview htmlContent={inputContent}></LivePreview>
+        <LivePreview 
+          htmlContent={inputContent}
+        />
       </PreviewDisplay>
 
     </Display>
