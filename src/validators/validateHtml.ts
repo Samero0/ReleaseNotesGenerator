@@ -19,7 +19,7 @@ export const validateHtml = (html: string): { isValid: boolean, errorMessage: st
     const openTags = html.match(/<([a-z]+)(?:\s[^>]*?)?>/gi);
     const closeTags = html.match(/<\/([a-z]+)>/gi);
 
-    // if there are unclosed tags, catch the error
+    // if there are unclosed tags, catches the error
     if (openTags!.length !== closeTags!.length) {
       return { isValid: false, errorMessage: "Html error: There are unclosed tags." };
     }
