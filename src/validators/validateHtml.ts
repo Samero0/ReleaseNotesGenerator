@@ -17,10 +17,24 @@ export const validateHtml = (html: string): { isValid: boolean, errorMessage: st
 
     // gather all the open and closed tags
     const openTags = html.match(/<([a-z]+)(?:\s[^>]*?)?>/gi);
-    const closeTags = html.match(/<\/([a-z]+)>/gi);
+    const closedTags = html.match(/<\/([a-z]+)>/gi);
+
+    const stack : string[] = []
+
+    for (const tag of openTags!){
+      if (tag.match(/<([a-z]+)(?:\s[^>]*?)?>/)){
+        stack.push(tag)
+      }
+    }
+
+    for (const tag of closedTags!){
+      if (tag.match(/<\/([a-z]+)>/)){
+        stack.push(tag)
+      }
+    }
 
     // if there are unclosed tags, catches the error
-    if (openTags!.length !== closeTags!.length) {
+    if (openTags!.length !== closedTags!.length) {
       return { isValid: false, errorMessage: "Html error: There are unclosed tags." };
     }
 

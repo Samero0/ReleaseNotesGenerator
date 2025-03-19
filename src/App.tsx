@@ -43,7 +43,7 @@ const EditorWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap:1em;
+  gap: 1em;
 `;
 
 const PreviewDisplay = styled.div`
@@ -58,12 +58,25 @@ const PreviewDisplay = styled.div`
   margin: 8px;
 `;
 
-const FormInputElement = styled.div`
+const InputWrapper = styled.div`
   display: flex;
   flex-direction: row;
   padding: 10px;
   gap: 1em;
   align-items: center;
+  justify-content: center;
+  width: 100%;
+`;
+
+const FormInputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   justify-content: center;
 `;
 
@@ -76,7 +89,7 @@ const FormContent = styled.div`
   align-items: center;
 `;
 
-const ImgDisplay = styled.div`
+const ImgWrapper = styled.div`
   display: flex;
   justify-content: end;
 `;
@@ -139,23 +152,25 @@ export const App = () => {
 
         <FormContent>
 
-          <FormInputElement>
-            <Label id="label_version" text="Version:" />
-            <Input
-              id="input_version"
-              placeholder="X.Y.Z"
-              value={inputVersion}
-              onChange={handleChangeVersion}
-            />
-          </FormInputElement>
+          <FormInputWrapper>
+            <InputWrapper>
+              <Label id="label_version" text="Version:" />
+              <Input
+                id="input_version"
+                placeholder="X.Y.Z"
+                value={inputVersion}
+                onChange={handleChangeVersion}
+              />
+            </InputWrapper>
 
-          <FormInputElement>
-            <Label id="label_date" text="Date:" />
-            <CustomDatePicker
-              value={startDate}
-              onChange={setStartDate}
-            />
-          </FormInputElement>
+            <InputWrapper>
+              <Label id="label_date" text="Date:" />
+              <CustomDatePicker
+                value={startDate}
+                onChange={setStartDate}
+              />
+            </InputWrapper>
+          </FormInputWrapper>
 
           <EditorWrapper>
             <Label 
@@ -169,20 +184,22 @@ export const App = () => {
           </EditorWrapper>
         </FormContent>
 
-        <FormInputElement>
-          <Button
-            id="button_indent"
-            onClick={handleIndentContent}
-            text="Indent Content"
-          />
-          <Button
-            id="button_generate"
-            onClick={() => generateCode(startDate, inputVersion, inputContent)}
-            text="Generate"
-          />
-        </FormInputElement>
+        <ButtonWrapper>
+          <InputWrapper>
+            <Button
+              id="button_indent"
+              onClick={handleIndentContent}
+              text="Indent Content"
+            />
+            <Button
+              id="button_generate"
+              onClick={() => generateCode(startDate, inputVersion, inputContent)}
+              text="Generate"
+            />
+          </InputWrapper>
+        </ButtonWrapper>
 
-        <ImgDisplay>
+        <ImgWrapper>
           <Clickableimg 
             imageSrc={clipBoardIcon} 
             alt='clipboard' 
@@ -190,7 +207,7 @@ export const App = () => {
             onClick={() => {copyToClipboard(code)}}
             tooltip='Copy to clipboard'
           />
-        </ImgDisplay>
+        </ImgWrapper>
 
         <FormResult>
           <TextBox 
