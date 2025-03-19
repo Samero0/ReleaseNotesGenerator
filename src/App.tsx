@@ -108,7 +108,7 @@ export const App = () => {
 
     const { isValid, errorMessage } = validateHtml(inputContentCleaned);
     if (!isValid) {
-      alert(errorMessage);  //display the error message in an alert
+      alert(errorMessage);  
       return;
     }
 

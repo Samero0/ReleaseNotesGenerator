@@ -12,12 +12,8 @@
   "dependencies": {
     "@codemirror/lang-html": "^6.4.9",
     "@uiw/react-codemirror": "^4.23.10",
-    "bootstrap": "^5.3.3",
     "codemirror": "^6.0.1",
-    "date-fns": "^4.1.0",
     "js-beautify": "^1.15.4",
-    "pretier": "^0.0.1",
-    "prettier": "^3.5.3",
     "react": "^19.0.0",
     "react-datepicker": "^8.2.1",
     "react-dom": "^19.0.0",
