@@ -7,10 +7,10 @@ interface TextBoxProps{
 }
 
 const StyledTextBox = styled.textarea`
-    padding: 10px 20px;
+    padding: 10px;
     background-color: #383838;
     color: white;
-    width: 700px;
+    width: 100%;
     height: 250px;
     font-family: 'Courier New', Courier, monospace;
     font-size: 13px;

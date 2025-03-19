@@ -32,13 +32,13 @@ const HtmlEditor: React.FC<HtmlEditorProps> = ({ value, onChange }) => {
   return (
     <CodeMirror
       value={value}
-      height="270px"
-      width="700px"
       extensions={[
         html(),
         EditorState.tabSize.of(2),
         noGutterTheme, // custom theme
       ]}
+      width="100%"
+      height="250px"
       onChange={onChange}
       basicSetup={{ lineNumbers: false }} 
     />

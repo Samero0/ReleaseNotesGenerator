@@ -39,6 +39,13 @@ const FormDisplay = styled.div`
   margin: 8px;
 `;
 
+const EditorWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap:1em;
+`;
+
 const PreviewDisplay = styled.div`
   display: flex;
   flex-direction: column;
@@ -75,9 +82,8 @@ const ImgDisplay = styled.div`
 `;
 
 const FormResult = styled.div`
+  padding: 10px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
 `;
 
 export const App = () => {
@@ -151,15 +157,16 @@ export const App = () => {
             />
           </FormInputElement>
 
-          <Label 
-            id="label_content" 
-            text="Content:" 
-          />
-          <HtmlEditor
-            value={inputContent}
-            onChange={handleEditorChange}
-          />
-
+          <EditorWrapper>
+            <Label 
+              id="label_content" 
+              text="Content:" 
+            />
+            <HtmlEditor
+              value={inputContent}
+              onChange={handleEditorChange}
+            />
+          </EditorWrapper>
         </FormContent>
 
         <FormInputElement>
